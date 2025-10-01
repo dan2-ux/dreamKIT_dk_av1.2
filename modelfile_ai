@@ -1,0 +1,57 @@
+FROM gemma3:4b
+
+# This is the template that tells Ollama how to format the chat turns
+# and how to handle tool definitions and tool calls.
+TEMPLATE """{{- if .Messages }}
+{{- if or .System .Tools }}<start_of_turn>user
+{{- if .System}}
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+# Tools
+You may call one or more functions to assist with the user query.
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+
+{{- range $.Tools }}
+{"type": "function", "function": {{ .Function }}}
+{{- end }}
+</tools>
+
+For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+{{- end }}<end_of_turn>
+{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 -}}
+{{- if eq .Role "user" }}<start_of_turn>user
+{{ .Content }}<end_of_turn>
+{{ else if eq .Role "assistant" }}<start_of_turn>model
+{{ if .Content }}{{ .Content }}
+{{- else if .ToolCalls }}<tool_call>
+{{ range .ToolCalls }}{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments}}}
+{{ end }}</tool_call>
+{{- end }}{{ if not $last }}<end_of_turn>
+{{ end }}
+{{- else if eq .Role "tool" }}<start_of_turn>user
+<tool_response>
+{{ .Content }}
+</tool_response><end_of_turn>
+{{ end }}
+{{- if and (ne .Role "assistant") $last }}<start_of_turn>model
+{{ end }}
+{{- end }}
+{{- else }}
+{{- if .System }}<start_of_turn>user
+{{ .System }}<end_of_turn>
+{{ end }}{{ if .Prompt }}<start_of_turn>user
+{{ .Prompt }}<end_of_turn>
+{{ end }}<start_of_turn>model
+{{ end }}{{ .Response }}{{ if .Response }}<end_of_turn>{{ end }}"""
+
+# THIS IS THE CHANGE: Add or refine the SYSTEM instruction
+SYSTEM """You are a helpful conversational AI assistant. You have access to tools to assist with user queries.
+When you use a tool and receive a <tool_response>, carefully read the output and then provide a clear, concise, and friendly answer to the user's original question based on that information. If a tool call fails, inform the user about the failure.
+Do not just output the raw tool response. Always formulate a natural language response."""
