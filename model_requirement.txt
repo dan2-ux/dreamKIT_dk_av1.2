@@ -1,0 +1,11 @@
+typing
+dotenv
+langchain
+langgraph
+langchain_core
+langchain_ollama
+kuksa_client
+grpcio 
+grpcio-tools
+langchain_chroma
+pandas
