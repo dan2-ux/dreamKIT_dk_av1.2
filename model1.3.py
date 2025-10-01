@@ -55,7 +55,7 @@ async def target_value_teller(api: str):
         return f"Failed to tell {api} value: {e}"
 
 
-async def target_value_setter(type: str, new_state: Union[bool, int]):
+async def target_value_setter(type: str, new_state: Union[bool, int, str]):
     try:
         async with vss as client:
             success = await client.set_target_values({
@@ -66,14 +66,14 @@ async def target_value_setter(type: str, new_state: Union[bool, int]):
         return f"Failed to set {type} value to {new_state}"
 
 @tool
-def setter(api: str, value: Union[bool, int]):
+def setter(api: str, value: Union[bool, int, str]):
     """
         Tool to set the vehicle lights.
         Tool to check what kind of vehicle value the user want to change. there are multiple types of api for you to choose.
         Choose the api based on the user demand
         Args:
             api (str): the api acording to user demand.
-            value (bool/int): The state of it depend on what user said, it can be boolean or int.
+            value (bool/int/str): The state of it depend on what user said, it can be boolean, int or string.
     """
     result = asyncio.run(target_value_setter(api, value))
     
