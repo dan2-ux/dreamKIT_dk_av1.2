@@ -108,7 +108,15 @@ To know vehicle api name better check out the **data.csv**, or you can change th
 However, when change the **data.csv** file you should delete **chroma_langchain_db1** which is contains the new value that AI look into. 
 
 
+## How to deal with LLM model that doesn't have tool calling function
+This is a tricky situation: most companies have removed tool-calling capabilities from their latest LLMs. However, tool calling remains a powerful way for an LLM to interact with the host computer, which is why this repository is built on that principle.
 
+If your chosen model does not support tool calling, first open the modelfile_ai file and change the LLM name on the first line to the model you prefer. Once done, run the following command.
+
+<pre>
+  ollama create new-model-name -f modelfile-ai
+</pre>
+This works well on gemma model and it actually give them tool calling functionality, however other model may not perform as expected.
 
 
 
