@@ -223,18 +223,18 @@ Vehicle.Cabin.Infotainment.SmartphoneProjection.Active,actuator,string, smart ph
 Vehicle.Cabin.Infotainment.SmartphoneProjection.Source,actuator,string, smart phone projection 
 Vehicle.Cabin.Infotainment.SmartphoneProjection.SupportedMode,attribute,string, smart phone projection 
 Vehicle.Cabin.IsWindowChildLockEngaged,actuator,boolean, windown child lock status 
-Vehicle.Cabin.Light.AmbientLight.Row1.DriverSide.Color,actuator,string,  ambient light driver side color 
-Vehicle.Cabin.Light.AmbientLight.Row1.DriverSide.Intensity,actuator,uint8,  ambient light driver side intensity 
-Vehicle.Cabin.Light.AmbientLight.Row1.DriverSide.IsLightOn,actuator,boolean,  ambient light driver side light 
-Vehicle.Cabin.Light.AmbientLight.Row1.PassengerSide.Color,actuator,string,  ambient light passenger side color 
-Vehicle.Cabin.Light.AmbientLight.Row1.PassengerSide.Intensity,actuator,uint8,  ambient light passenger side intensity 
-Vehicle.Cabin.Light.AmbientLight.Row1.PassengerSide.IsLightOn,actuator,boolean,  ambient light passenger side light 
-Vehicle.Cabin.Light.AmbientLight.Row2.DriverSide.Color,actuator,string, row 2 ambient light driver side color 
-Vehicle.Cabin.Light.AmbientLight.Row2.DriverSide.Intensity,actuator,uint8, row 2 ambient lights driver side intensity
-Vehicle.Cabin.Light.AmbientLight.Row2.DriverSide.IsLightOn,actuator,boolean, row 2 ambient lights driver side light 
-Vehicle.Cabin.Light.AmbientLight.Row2.PassengerSide.Color,actuator,string, row 2 ambient lights passenger side color 
-Vehicle.Cabin.Light.AmbientLight.Row2.PassengerSide.Intensity,actuator,uint8, row 2 ambient lights passenger side intensity 
-Vehicle.Cabin.Light.AmbientLight.Row2.PassengerSide.IsLightOn,actuator,boolean, row 2 ambient lights passenger side light 
+Vehicle.Cabin.Light.AmbientLight.Row1.DriverSide.Color,actuator,string, driver ambient light  color 
+Vehicle.Cabin.Light.AmbientLight.Row1.DriverSide.Intensity,actuator,uint8, driver ambient light intensity 
+Vehicle.Cabin.Light.AmbientLight.Row1.DriverSide.IsLightOn,actuator,boolean, driver ambient light 
+Vehicle.Cabin.Light.AmbientLight.Row1.PassengerSide.Color,actuator,string, passenger ambient light color 
+Vehicle.Cabin.Light.AmbientLight.Row1.PassengerSide.Intensity,actuator,uint8, passenger ambient light intensity 
+Vehicle.Cabin.Light.AmbientLight.Row1.PassengerSide.IsLightOn,actuator,boolean, passenger ambient light  
+Vehicle.Cabin.Light.AmbientLight.Row2.DriverSide.Color,actuator,string, driver ambient light row 2   color 
+Vehicle.Cabin.Light.AmbientLight.Row2.DriverSide.Intensity,actuator,uint8, driver ambient lights row 2 intensity
+Vehicle.Cabin.Light.AmbientLight.Row2.DriverSide.IsLightOn,actuator,boolean, driver ambient lights row 2  
+Vehicle.Cabin.Light.AmbientLight.Row2.PassengerSide.Color,actuator,string, passenger ambient lights row 2 color 
+Vehicle.Cabin.Light.AmbientLight.Row2.PassengerSide.Intensity,actuator,uint8, passenger ambient lights row 2 intensity 
+Vehicle.Cabin.Light.AmbientLight.Row2.PassengerSide.IsLightOn,actuator,boolean, passenger ambient lights row 2  
 Vehicle.Cabin.Light.InteractiveLightBar.Color,actuator,string, cabin interactive light bar color 
 Vehicle.Cabin.Light.InteractiveLightBar.Effect,actuator,string, cabin interactive light bar Effect 
 Vehicle.Cabin.Light.InteractiveLightBar.Intensity,actuator,uint8, cabin interactive light bar intensity
