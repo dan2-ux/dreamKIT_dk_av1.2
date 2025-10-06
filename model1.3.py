@@ -61,7 +61,7 @@ async def target_value_setter(type: str, new_state: Union[bool, int, str]):
             success = await client.set_target_values({
                 f"{type}": Datapoint(new_state)
             })
-            return success
+            return type and success
     except:
         return f"Failed to set {type} value to {new_state}"
 
@@ -90,11 +90,15 @@ def teller(api: str):
     return state
 
 @tool
-def time_teller():
-    """Returns the current time."""
-    return datetime.now().strftime("%d-%m-%Y %I:%M:%S %p")
+def api_teller(api: str):
+    """
+        This tool will help the user to tell what is the api for the specific vehicle value
+        Args:
+            api (str): the api according to user demand.
+    """
+    return api
 
-tools = [time_teller, teller, setter]
+tools = [teller, setter]
 
 
 # defining model for tool calling
@@ -135,74 +139,36 @@ chain = prompt | model1
 
 def model_call(state: AgentState) -> AgentState:
 
-    last_user_input = ""
-    for msg in reversed(state["messages"]):
-        if isinstance(msg, HumanMessage):
-            last_user_input = msg.content.lower()
-            break
+    last_message = state['messages'][-1].content
+    information = retriever.invoke(last_message)
+        
+    # Assign result to response
+    response = chain.invoke({
+        "information": information,
+        "question": last_message,
+    })
+    system_prompt = SystemMessage(content= f"""
+        The api which user mention will be determine by another ai, and the api and the type are {response}. and there for you don't need to detect api yourself.
+        If the user demand you to change or to alter vehicle value, then call tool 'setter'. However, enable to make the tool work, you need to detect the vehicle api and the value user want to change into.
+        
+        If the user want you to tell them the specific state of vehicle value or simply want to know the status of vehicle value then you should call 'teller'. This tool only demand you to detect the vehicle api to make it work.
+        
+        After calling tool, the tool will give the result back to confirm that the tool calling work or not. Therefore, answer base on that but answer as straight forward as possible.
+    """)
 
-    allowed_keywords = ["time", "date", "set", "change", "turn", "status"]
+    response = model.invoke([configure["name"]] + [configure["definition"]] + [system_prompt] + state["messages"])
+    print("Thinking...")
 
-    is_tool_needed = any(keyword in last_user_input for keyword in allowed_keywords)
-
-    if is_tool_needed:
-        last_message = state['messages'][-1].content
-        information = retriever.invoke(last_message)
-            
-        # Assign result to response
-        response = chain.invoke({
-            "information": information,
-            "question": last_message,
-        })
-        system_prompt = SystemMessage(content= f"""
-            The api which user mention will be determine by another ai, and the api and the type are {response}. and there for you don't need to detect api yourself.
-            If the user demand you to change or to alter vehicle value, then call tool 'setter'. However, enable to make the tool work, you need to detect the vehicle api and the value user want to change into.
-            
-            If the user want you to tell them the specific state of vehicle value then you should call 'teller'. This tool only demand you to detect the vehicle api to make it work.
-            
-            If the user ask you to set or to change vehicle value to 100 then make sure to pass 100 as int to 'setter' tool. However, if user ask you to 'turn on' vehicle value which is suppose to be int like 'passenger fan speed' or 'driver fan speed' then pass value as 100
-            
-            If the user asking anything about the 'time' including 'month', 'day', 'minnute', 'hour',... then call tool 'time_teller'.
-
-            After calling tool, the tool will give the result back to confirm that the tool calling work or not. Therefore, answer base on that but answer as straight forward as possible.
-        """)
-
-        response = model.invoke([configure["name"]] + [configure["definition"]] + [system_prompt] + state["messages"])
-        print("Thinking...")
-
-        if hasattr(response, "tool_calls") and response.tool_calls:
-            print("\nAI is making a tool call")
-            for call in response.tool_calls:
-                print(f"→ Tool: {call['name']}, Arguments: {call['args']}")
-        else:
-            #speech(response.content)
-            print("\nAI: ", response.content)
-
-        state["messages"].append(response)
-        return state
+    if hasattr(response, "tool_calls") and response.tool_calls:
+        print("\nAI is making a tool call")
+        for call in response.tool_calls:
+            print(f"→ Tool: {call['name']}, Arguments: {call['args']}")
     else:
-        response = llm.stream([configure["name"]] + [configure["definition"]] + state["messages"])
-        full_response = ""
-        print("Thinking... ")
-        frist_res = False
+        #speech(response.content)
+        print("\nAI: ", response.content)
 
-        if response:
-            for res in response:
-                if not frist_res:
-                    frist_res = True
-                    print("\nAI: ", end="" , flush= True)
-                print(res.content, end="", flush=True)
-                full_response += res.content
-            try:
-                #check_json = json.loads(full_response)
-                state["messages"].append(AIMessage(content= "Failed"))
-            except (ValueError, TypeError):
-                #speech(full_response)
-                state["messages"].append(AIMessage(content= full_response))
-        else:
-            print("\nAI: [No meaningful response generated]")
-
-        return state
+    state["messages"].append(response)
+    return state
 
 
 def should_continue(state: AgentState): 
@@ -238,7 +204,7 @@ agent = graph.compile()
 
 history = []
 
-agent.invoke({"messages": [HumanMessage(content= "Hello")]})
+#agent.invoke({"messages": [HumanMessage(content= "Hello")]})
 
 while True:
     user_input = input("\nEnter: ")
