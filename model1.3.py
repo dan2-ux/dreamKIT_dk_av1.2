@@ -14,12 +14,17 @@ import asyncio
 from kuksa_client.grpc.aio import VSSClient
 from kuksa_client.grpc import Datapoint
 
-#import pygame
-#from gtts import gTTS
+import pygame
+from gtts import gTTS
 import os
 import time
 
 import json
+
+#import sounddevice as sd
+#from kittentts import KittenTTS
+
+#os.environ["PULSE_SERVER"] = os.getenv("PULSE_SERVER")
 
 load_dotenv()
 
@@ -34,6 +39,7 @@ class AgentState(TypedDict):
 
 vss = VSSClient(configure["ip_address"], configure["port"])
 
+#speaker = KittenTTS("KittenML/kitten-tts-nano-0.2")
 
 # tool call and funtion to support it
 #-----------------------------------#
@@ -109,7 +115,7 @@ try:
     model1 = ChatOllama(model = configure['api_detect_model'])
     print("✅ AI model is ready")
 except:
-    print("There is something wrong with AI model")
+    print("❌ There is something wrong with AI model")
 
 
 # importing model to call API
@@ -136,6 +142,22 @@ template = """
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model1
 
+language='en'
+accent='co.uk'
+tem_mp3="temp_audio.mp3"
+
+def speech(speak_data):
+    if os.path.exists(tem_mp3):
+        os.remove(tem_mp3)
+
+    speech = gTTS(lang=language , text= f"{speak_data }", tld= accent, slow=False)
+    pygame.mixer.init()
+    speech.save(tem_mp3)
+    pygame.mixer.music.load(tem_mp3)
+    pygame.mixer.music.play()
+    
+    while pygame.mixer.music.get_busy():
+        time.sleep(0.5)
 
 def model_call(state: AgentState) -> AgentState:
 
@@ -164,8 +186,8 @@ def model_call(state: AgentState) -> AgentState:
         for call in response.tool_calls:
             print(f"→ Tool: {call['name']}, Arguments: {call['args']}")
     else:
-        #speech(response.content)
-        print("\nAI: ", response.content)
+        print("AI: ", response.content)
+        speech(response.content)
 
     state["messages"].append(response)
     return state
