@@ -21,6 +21,10 @@ import time
 
 import json
 
+import speech_recognition as sr
+
+recognizer = sr.Recognizer()
+
 #import sounddevice as sd
 #from kittentts import KittenTTS
 
@@ -226,16 +230,44 @@ agent = graph.compile()
 
 history = []
 
-#agent.invoke({"messages": [HumanMessage(content= "Hello")]})
+agent.invoke({"messages": [HumanMessage(content= "Hello")]})
 
 while True:
-    user_input = input("\nEnter: ")
+    
+    with sr.Microphone() as mic:
+        print("Listening...")
+        recognizer.adjust_for_ambient_noise(mic, duration=2)
+        audio = recognizer.listen(mic)
 
-    if user_input in ["end", "exit", "clode", "goodbye"]:
-        print("Turning model off...")
-        break
-    history.append(HumanMessage(content= user_input))
-    result = agent.invoke({"messages" : history})
-    history = result["messages"]
+        user_input = recognizer.recognize_google(audio)
+        user_input = user_input.lower()
+
+        print(f"User: {user_input}")
+
+        prompt = SystemMessage(content = f"""
+            You are a text detector, I will pass some text to you and your responsibility is that you have to detect if the text is similar to 'Hey AiVi'
+            Similar means it doesn't have to to exactly the same but if it is close to it then return 'true'.
+            If not do not thing.  
+            This is the text: {user_input}                 
+            """)
+        response = llm.invoke([prompt])
+        if response.content == 'true':
+            speech("Listening")
+            recognizer.adjust_for_ambient_noise(mic, duration=2)
+            audio = recognizer.listen(mic)
+
+            user_input = recognizer.recognize_google(audio)
+            user_input = user_input.lower()
+
+            print(f"User: {user_input}")
+
+
+            if user_input in ["end", "exit", "clode", "goodbye"]:
+                speech("Turning model off")
+                print("Turning model off...")
+                break
+            history.append(HumanMessage(content= user_input))
+            result = agent.invoke({"messages" : history})
+            history = result["messages"]
 
 print(f"\n✅ Successfull turn model {configure['tool_model']}, {configure['com_model']} and {configure['api_detect_model']}")
