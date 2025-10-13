@@ -76,7 +76,7 @@ First, you need to **cd** into the directory which help **dockerfile**. Then run
 ### Step 4: Run the docker image
 This step is more sticky as ollama and its LLM is outside of docker reach, and it is difficult to build docker with running LLM in it. So we need to go around it by connecting docker enviroment to host, making LLM reachable for docker. Run the following command to enable it.
 <pre>
-  docker run -it --rm --network host -v $(pwd):/app -w /app dk_av1.2
+  docker run -it --rm   --user $(id -u):$(id -g)   -e PULSE_SERVER=unix:/run/user/$(id -u)/pulse/native   -v /run/user/$(id -u)/pulse/native:/run/user/$(id -u)/pulse/native   -v ~/.config/pulse/cookie:/home/$(id -u)/.config/pulse/cookie   --device /dev/snd   --network host   -v $(pwd):/app -w /app   speech_av1.2:latest
 </pre>
 
 1. **docker run**: This tells Docker to create and run a new container from an image.
