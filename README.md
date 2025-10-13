@@ -3,6 +3,8 @@
 This is the AI-driven approach to the dreamKIT project, running will give AI more control over vss_dbc and enabling improved management.
 It also serves as an update to the previous predecessor, dreamKIT_dk_av1.
 
+( Check other branch of this respository for more feature)
+
 ## What is the difference from dreamKIT_dk_av1
 Av1 depends on the user’s guidance and the number of functions it can call. Despite performing well, Av1 soon encounters scalability issues, as it is limited by the number of APIs it can understand or call, as well as the amount of guidance and functions that can be written.
 
