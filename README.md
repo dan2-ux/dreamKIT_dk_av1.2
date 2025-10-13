@@ -121,8 +121,7 @@ This works well on gemma model and it actually give them tool calling functional
 
 Demonstration video
 
-file:///home/sdv-runtime/Videos/Screencasts/Screencast%20from%2010-13-2025%2009:55:28%20AM.webm
-
+[![Watch the video]]([https://youtu.be/vt5fpE0bzSY](https://www.youtube.com/watch?v=ehjjaURoV1o))
 
 
 
