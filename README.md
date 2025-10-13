@@ -119,10 +119,9 @@ If your chosen model does not support tool calling, first open the modelfile_ai 
 This works well on gemma model and it actually give them tool calling functionality, however other model may not perform as expected.
 
 
-Demonstration video
+## Demonstration video
 
-[![Watch the video]([https://youtu.be/vt5fpE0bzSY)](https://www.youtube.com/watch?v=ehjjaURoV1o)
-
+[![Watch the video](https://i.sstatic.net/Vp2cE.png)](https://www.youtube.com/watch?v=ehjjaURoV1o)
 
 
 
