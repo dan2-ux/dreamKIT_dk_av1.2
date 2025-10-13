@@ -11,8 +11,8 @@ Since vss_dbc contains around 600 APIs—each with different types requiring uni
 ## Why this need to be implemented?
 In a functioning dreamKIT, there are only 3 main methods to alter the vehicle value.
 - The first is through **dk_ivi** (the app running for dreamKIT interaction). However, this only have couple of built-in buttons or sliders for changing specific vehicle value, making interacting with value that doesn't display on dk_ivi imposible.
-- The second way is through playground. However, this still require stable sdv-runtime and internet connection. But still limited because of it require you to have experience interacting with playground.
-- The third way is to use kuksa-client, this is the best way if you want to have the ability to interact with all vehicle data, but this still requires you to know the exact api you want to interact with.
+- The second way is through **playground**. However, this still require stable sdv-runtime and internet connection. But still limited because of it require you to have experience interacting with playground.
+- The third way is to use **kuksa-client**, this is the best way if you want to have the ability to interact with all vehicle data, but this still requires you to know the exact api you want to interact with.
 
 Compine with the fact that new developer or user are not familiar with vss_dbc api enough to interact with dreamKIT. There for I created dreamKIT_dk_av1.2, which runs natively on user device and help user to interact with api through human like interaction. 
 
