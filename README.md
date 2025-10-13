@@ -121,7 +121,7 @@ This works well on gemma model and it actually give them tool calling functional
 
 Demonstration video
 
-[![Watch the video]]([https://youtu.be/vt5fpE0bzSY](https://www.youtube.com/watch?v=ehjjaURoV1o))
+[![Watch the video]([https://youtu.be/vt5fpE0bzSY)](https://www.youtube.com/watch?v=ehjjaURoV1o)
 
 
 
