@@ -174,7 +174,7 @@ def model_call(state: AgentState) -> AgentState:
         "question": last_message,
     })
     system_prompt = SystemMessage(content= f"""
-        The api which user mention will be determine by another ai, and the api and the type are {response}. and there for you don't need to detect api yourself.
+        The api which user mention will be determine by another ai, and the api and the type are {response.content}. and there for you don't need to detect api yourself.
         If the user demand you to change or to alter vehicle value, then call tool 'setter'. However, enable to make the tool work, you need to detect the vehicle api and the value user want to change into.
         
         If the user want you to tell them the specific state of vehicle value or simply want to know the status of vehicle value then you should call 'teller'. This tool only demand you to detect the vehicle api to make it work.
