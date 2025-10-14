@@ -37,7 +37,7 @@ However, this was built on Ubuntu, so it may not run properly or may perform slo
 Additionally, your device should have high computing power; otherwise, the LLM may not perform well.
 
 ## Workflow
-The model require 3 LLM model which all have different responsabilit, which are named inside of the *define.json*.
+The model require 3 LLM models which all have different responsabilit, which are named inside of the *define.json*.
 - **tool_model**: reponsible for tool calling.
 - **com_model**: is tasked with communicating normal conversation with user.
 - **api_detect_model**: detecting api that is neccesary based on user command.
