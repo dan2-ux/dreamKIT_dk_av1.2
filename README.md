@@ -28,6 +28,9 @@ Compine with the fact that new developer or user are not familiar with vss_dbc a
 
 **Warning**: If you are unfamiliar with eclipse-autowrx and kuksa_client, I highly encourage you to first learn about dreamKIT, which was designed and developed by Bosch’s team.
 
+## Sumary about dreamKIT
+dreamKIT is an AUTOSAR-based automotive project developed by Bosch, aimed at the EV market. The main computer, Jetson AGX Orin, is responsible for connecting and interacting with the NXP S32G through CAN communication and the Playground which is a web-based platform used to interact with dreamKIT. The AI runs on the Orin and communicates directly with the server, enabling it to retrieve or modify vehicle parameters.
+
 ## Hardware requirement
 You don't need to purchase extra tool, sensor or device to run this repository.
 However, this was built on Ubuntu, so it may not run properly or may perform slowly on other operating systems.
