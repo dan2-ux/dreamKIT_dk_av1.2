@@ -1,6 +1,6 @@
 # This repository showcases the next version of dreamKIT_dk_av1.2
 
-This is the AI-driven approach to the dreamKIT project, running will give AI more control over vss_dbc and enabling improved management.
+This is the AI-driven approach to the dreamKIT project, giving AI more control over vss_dbc and enabling improved management.
 It also serves as an update to the previous predecessor, dreamKIT_dk_av1.
 
 ( Check other branch of this respository for more feature)
