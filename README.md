@@ -6,7 +6,7 @@ It also serves as an update to the previous predecessor, dreamKIT_dk_av1.
 ( Check other branch of this respository for more feature)
 
 ## What is the difference from dreamKIT_dk_av1
-Av1 depends on the user’s guidance and the number of functions it can call. Despite performing well, Av1 soon encounters scalability issues, as it is limited by the number of APIs it can understand or call, as well as the amount of guidance and functions that can be written.
+Av1 depends on the user’s guidance and is limitted on number of functions it can call. Despite performing well, Av1 soon encounters scalability issues, as it is limited by the number of APIs it can understand or call, as well as the amount of guidance and functions that can be written.
 
 Since vss_dbc contains around 600 APIs—each with different types requiring unique functions to either modify or retrieve their values—this complexity eventually leads to a dead end.
 
